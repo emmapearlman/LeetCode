@@ -39,5 +39,34 @@
             }
             return sb.ToString();
         }
+
+        public int ScoreOfString(string s)
+        {
+            int score = 0;
+            int diff = 0;
+
+            if (string.IsNullOrEmpty(s))
+            {
+                return score;
+            }
+            byte[] asciiBytes = Encoding.ASCII.GetBytes(s);
+
+            int i = 0;
+            while (i < asciiBytes.Length)
+            {
+                if (i + 1 == asciiBytes.Length)
+                {
+                    break;
+                }
+                diff = Math.Abs(asciiBytes[i] - asciiBytes[i + 1]);
+                score += diff;
+                i++;
+            }
+
+
+
+            return score;
+
+        }
     }
 }
