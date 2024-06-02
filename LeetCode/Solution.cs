@@ -39,5 +39,20 @@
             }
             return sb.ToString();
         }
+
+        public void ReverseString(char[] s)
+        {
+            int l = 0;
+            int r = s.Length - 1;
+
+            while (l < r)
+            {
+                char temp = s[l];
+                s[l++] = s[r];
+                s[r--] = temp;
+            }
+            //Console.WriteLine("[{0}]", string.Join(", ", s));
+        }
+    
     }
 }
