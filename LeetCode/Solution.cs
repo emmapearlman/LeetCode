@@ -69,7 +69,7 @@
 
         }
 
-        public void ReverseString(char[] s)
+        public char[] ReverseString(char[] s)
         {
             int l = 0;
             int r = s.Length - 1;
@@ -81,7 +81,33 @@
                 s[r--] = temp;
             }
             //Console.WriteLine("[{0}]", string.Join(", ", s));
+            return s;
         }
-    
+
+        public int AppendCharacters(string s, string t)
+        {
+            int j = 0;
+            if (String.IsNullOrEmpty(s))
+            {
+                return 0;
+            }
+
+            int n = s.Length;
+            int m = t.Length;
+
+            for (int i = 0; i < n; i++)
+            {
+                if (s.Substring(i,1) == t.Substring(j, 1))
+                {
+                    j++;
+                    if (j == m)
+                    {
+                        break;
+                    }
+                }
+            }
+            return m - j;
+        }
+
     }
 }
