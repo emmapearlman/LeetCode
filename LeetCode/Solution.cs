@@ -1,5 +1,6 @@
 ﻿namespace LeetCode
 {
+    using System.Collections;
     using System.Linq;
     using System.Text;
 
@@ -97,7 +98,7 @@
 
             for (int i = 0; i < n; i++)
             {
-                if (s.Substring(i,1) == t.Substring(j, 1))
+                if (s.Substring(i, 1) == t.Substring(j, 1))
                 {
                     j++;
                     if (j == m)
@@ -109,5 +110,65 @@
             return m - j;
         }
 
+        public string ReplaceWords(IList<string> dictionary, string sentence)
+        {
+            Tree tree = new Tree();
+            //split sentence
+            var sentenceArray= sentence.Split(' ');
+            for (int i = 0; i < dictionary.Count; ++i)
+            {
+                tree.insert(dictionary[i], i);
+            }
+            var ans = new ArrayList();
+            foreach (string w in sentenceArray)
+            {
+                int idx = tree.search(w);
+                //word found
+                ans.Add(idx == -1 ? w : dictionary[idx]);
+            }
+            //arraylist needs to be converted back to an array
+            return string.Join(" ", ans.ToArray());
+
+        }
+    }
+
+    public class Tree
+    {
+        private Tree[] children = new Tree[26];
+        private int reference = -1;
+        //add word to tree
+        public void insert(string w, int i)
+        {
+            Tree node = this;
+            for (int j = 0; j < w.Length; ++j)
+            {
+                int idx = w.ToCharArray()[j] - 'a';
+                if (node.children[idx] == null)
+                {
+                    node.children[idx] = new Tree();
+                }
+                node = node.children[idx];
+            }
+            node.reference = i;
+        }
+        //find word in tree
+        public int search(string w)
+        {
+            Tree node = this;
+            for (int j = 0; j < w.Length; ++j)
+            {
+                int idx = w.ToCharArray()[j] - 'a';
+                if (node.children[idx] == null)
+                {
+                    return -1;
+                }
+                node = node.children[idx];
+                if (node.reference != -1)
+                {
+                    return node.reference;
+                }
+            }
+            return -1;
+        }
     }
 }
