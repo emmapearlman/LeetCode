@@ -1,7 +1,9 @@
 ﻿namespace LeetCode
 {
+    using System.Diagnostics.Metrics;
     using System.Linq;
     using System.Text;
+    using System.Xml.Linq;
 
     public class Solution
     {
@@ -97,7 +99,7 @@
 
             for (int i = 0; i < n; i++)
             {
-                if (s.Substring(i,1) == t.Substring(j, 1))
+                if (s.Substring(i, 1) == t.Substring(j, 1))
                 {
                     j++;
                     if (j == m)
@@ -109,5 +111,38 @@
             return m - j;
         }
 
+        public int LongestPalindrome(string s)
+        {
+
+            if (String.IsNullOrEmpty(s))
+            {
+                return 0;
+            }
+            HashSet<char> set = new HashSet<char>();
+            int count = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                char c = char.Parse(s.Substring(i, 1));
+                if (set.Contains(c))
+                {
+                    set.Remove(c);
+                    count++;
+                }
+                else
+                {
+                    set.Add(c);
+                }
+            }
+
+            if (set.Any())
+            {
+                return count * 2 + 1;
+            }
+
+            return count * 2;
+
+        }
     }
+
 }
+
