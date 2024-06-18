@@ -29,7 +29,7 @@ namespace LeetCodeTests
         public void ScoreOfStringReturnsZeroisWordIsNullOrempty(string? input)
         {
             var expected =0;
-            var actual = solution.ScoreOfString(input);
+            var actual = solution.ScoreOfString(input!);
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -54,7 +54,23 @@ namespace LeetCodeTests
         [TestCase(null, "abcde")]
         public void AppendCharactersReturnsZeroWithNullOrEmptySValue(string? s, string t)
         {
-            var actual = solution.AppendCharacters(s, t);
+            var actual = solution.AppendCharacters(s!, t);
+            Assert.That(actual, Is.EqualTo(0));
+        }
+
+        [TestCase("abccccdd",7)]
+        [TestCase("a", 1)]
+        public void LongestPalindromeReturnsExpectedValue(string input, int expected)
+        {
+            var actual =solution.LongestPalindrome(input);
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [TestCase("")]
+        [TestCase(null)]
+        public void LongestPalindromeReturnsZeroifInputIsNullOrEmpty(string? input)
+        {
+            var actual = solution.LongestPalindrome(input!);
             Assert.That(actual, Is.EqualTo(0));
         }
 
