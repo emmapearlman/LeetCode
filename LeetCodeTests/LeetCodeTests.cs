@@ -119,5 +119,14 @@ namespace LeetCodeTests
         }
 
 
+
+        [TestCase(new[] { "cat", "bat", "rat" }, "the cattle was rattled by the battery", "the cat was rat by the bat")]
+        [TestCase(new [] { "a", "b", "c" }, "aadsfasf absbs bbab cadsfafs", "a a b c")]
+        [TestCase(new[] { "catt","cat", "bat", "rat" }, "the cattle was rattled by the battery", "the cat was rat by the bat")]
+        public void ReplaceWordsReturnsSentence(string[] dictionary, string sentence, string expected)
+        {
+            var actual = solution.ReplaceWords(dictionary.ToList(), sentence);
+            Assert.That(actual,Is.EqualTo(expected));
+        }
     }
 }
