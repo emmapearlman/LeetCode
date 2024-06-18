@@ -1,6 +1,7 @@
 namespace LeetCodeTests
 {
     using LeetCode;
+    using System.Data;
 
     public class Tests
     {
@@ -73,6 +74,32 @@ namespace LeetCodeTests
             Assert.That(actual, Is.EqualTo(0));
         }
 
+        [TestCase(new object[] { "bella", "label", "roller" }, new object[] { "e", "l", "l" })]
+        [TestCase(new object[] { "cool", "lock", "cook" }, new object[] { "c", "o" })]
+        public void CommonCharsReturnsListOfLetters(object[] input, object[] expected)
+        {
+            var words =input.Select(o => o.ToString()).ToArray();
+            var expectedList = expected.ToList();
+            var actual = solution.CommonChars(words!);
 
+            foreach (var item in actual)
+            {
+                Assert.That(expectedList.Contains(item));
+            }
+        }
+
+        [Test]
+        public void CommonCharsReturnsOutOfRangeErrorIfWordsLengthEqualsOne()
+        {
+            var words = new[] { "hello" };
+            Assert.Throws<ArgumentOutOfRangeException>(()=> solution.CommonChars(words));
+        }
+
+        [Test]
+        public void CommonCharsReturnsOutOfRangeErrorIfAnyWordInWordsIsLongerThan100Chars()
+        {
+            var words = new[] { "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz" };
+            Assert.Throws<ArgumentOutOfRangeException>(() => solution.CommonChars(words));
+        }
     }
 }

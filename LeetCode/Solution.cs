@@ -146,3 +146,57 @@
 
 }
 
+        public IList<string> CommonChars(string[] words)
+        {
+            Collection<string> result = new Collection<string>();
+
+            try
+            {
+                if (words.Length <= 1 || words.Length >= 100)
+                {
+                    throw new ArgumentOutOfRangeException("words is the wrong length");
+                }
+                //can't be more than 26 because 26 letters in alphabet
+                var current = new int[26];
+                for (int i = 0; i < 26; i++)
+                    current[i] = int.MaxValue;
+
+                foreach (var word in words)
+                {
+                    if (word.Length >= 100)
+                    {
+                        throw new ArgumentOutOfRangeException("word is the too long");
+                    }
+                    //like above
+                    var temp = new int[26];
+                    foreach (var ch in word)
+                        temp[ch - 'a']++;
+
+                    for (int i = 0; i < 26; i++)
+                        current[i] = Math.Min(current[i], temp[i]);
+                }
+                for (int i = 0; i < 26; i++)
+                {
+                    while (current[i]-- > 0)
+                    {// populate result collection
+                        result.Add(((char)('a' + i)).ToString());
+                    }
+                }
+
+
+            }
+            catch (ArgumentOutOfRangeException aorEx)
+            {
+                throw aorEx;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            //turn it into a list
+            return result.ToList(); 
+        }
+
+    }
+}
