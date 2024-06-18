@@ -198,5 +198,69 @@
             return result.ToList(); 
         }
 
+        public bool IsNStraightHand(int[] hand, int groupSize)
+        {
+            // if total elements can not divided by group size...
+            if (hand.Length % groupSize != 0)
+            {
+                return false;
+            }
+
+
+            var sortedDict = new SortedDictionary<int, int>();
+            //put elements into sorted dictionary - this will record key and frequency of element in array
+            foreach (int i in hand)
+            {
+                if (!sortedDict.ContainsKey(i))
+                    sortedDict.Add(i, 0);
+
+                sortedDict[i] += 1;
+            }
+
+            while (sortedDict.Count > 0)
+            {
+                var keys = sortedDict.Keys.ToArray();
+                // if no of elements present in the dictionary is less than than the groupSize, stop
+                if (keys.Length < groupSize)
+                {
+                    return false;
+                }
+                // get the first element of the group
+                var start = keys[0];
+               
+                sortedDict[start] -= 1;
+                // if it's now zero, we have used all of that particular key, so remove it
+                if (sortedDict[start] == 0)
+                {
+                    sortedDict.Remove(start);
+                }
+                // next number
+                int next = start + 1;
+
+                for (int i = 1; i < groupSize; i++)
+                {
+                    // if the number is in the dictionary
+                    if (keys[i] == next)
+                    {
+                        // reduce its count
+                        sortedDict[next] -= 1;
+                        // if it gets to zero, remove it & get the next number
+                        if (sortedDict[next] == 0)
+                        {
+                            sortedDict.Remove(next);
+                        }
+
+                        next += 1;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
     }
 }
